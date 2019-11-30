@@ -1,8 +1,11 @@
 package com.skillsapphire.service;
 
 import com.skillsapphire.model.Category;
+import com.skillsapphire.model.Expense;
 import com.skillsapphire.repository.EmsRepository;
+import com.skillsapphire.util.EmsUtil;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,17 +33,6 @@ public class EmsCategoryService {
         System.out.println("Category added sucessfully!");
     }
     public void updateCategory(){
-        /*showAllCategories();
-        System.out.print("Choose a category which you want to update: ");
-        Integer choice = input.nextInt();
-        Category category = emsRepository.getCategories().get(choice-1);
-        emsRepository.getCategories().remove(choice-1);
-        input.nextLine();
-        System.out.println("Enter new value for category name: ");
-        String newCategoryName = input.nextLine();
-        category.setName(newCategoryName);
-        emsRepository.getCategories().add(choice-1,category);
-        showAllCategories();*/
 
         showAllCategories();
         System.out.print("Choose a category which you want to update: ");
@@ -82,5 +74,49 @@ public class EmsCategoryService {
         for(int i=0; i<categories.size(); i++){
             System.out.println((i+1)+". "+"Category name: "+categories.get(i).getName()+", Category Id: "+categories.get(i).getId());
         }
+    }
+
+    //// Expense related operations
+    public void addExpense(){
+        System.out.println("Enter the expense details: ");
+        showAllCategories();
+        System.out.print("Choose a category from above list: ");
+        Integer catChoice = input.nextInt();
+        Category selectedCat = emsRepository.getCategories().get(catChoice-1);
+
+        System.out.print("Enter expense amount: ");
+        Float expAmount = input.nextFloat();
+        // Flush the extra newline, as its gets added to the stream after taking any numeric value as input from scanner class
+        input.nextLine();
+
+        System.out.print("Enter expense remark: ");
+        String expRemark = input.nextLine();
+
+        System.out.print("Enter expense date (DD/MM/YYYY - 20/11/2019): ");
+        String dateInString = input.nextLine();
+
+        Expense expense = new Expense();
+        expense.setCategoryId(selectedCat.getId());
+        expense.setAmount(expAmount);
+        expense.setRemark(expRemark);
+
+        Date expDate = EmsUtil.convertStringToDate(dateInString,"dd/MM/yyyy");
+        expense.setDate(expDate);
+
+        emsRepository.getExpenses().add(expense);
+        System.out.println("Expense added successfully!");
+
+    }
+    public void updateExpense(){
+        System.out.print("updateExpense");
+    }
+    public void deleteExpense(){
+        System.out.print("deleteExpense");
+    }
+    public void showAnExpense(){
+        System.out.print("showAnExpense");
+    }
+    public void showAllExpenses(){
+        System.out.print("showAllExpenses");
     }
 }

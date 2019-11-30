@@ -36,6 +36,26 @@ public class EmsController {
                     emsCategoryService.showCategory();
                     pressEnterKeyToContinue();
                     break;
+                case 6:
+                    emsCategoryService.addExpense();
+                    pressEnterKeyToContinue();
+                    break;
+                case 7:
+                    emsCategoryService.updateExpense();
+                    pressEnterKeyToContinue();
+                    break;
+                case 8:
+                    emsCategoryService.deleteExpense();
+                    pressEnterKeyToContinue();
+                    break;
+                case 9:
+                    emsCategoryService.showAllExpenses();
+                    pressEnterKeyToContinue();
+                    break;
+                case 10:
+                    emsCategoryService.showAnExpense();
+                    pressEnterKeyToContinue();
+                    break;
                 case 0:
                     System.out.println("closing the app...");
                     System.exit(0);
@@ -56,6 +76,12 @@ public class EmsController {
         System.out.println("3. Delete a category");
         System.out.println("4. Show all categories");
         System.out.println("5. Show details of a category");
+        System.out.println("****Manage Expense Menu*******");
+        System.out.println("6. Add a new expense");
+        System.out.println("7. Update an expense");
+        System.out.println("8. Delete an expense");
+        System.out.println("9. Show all expenses");
+        System.out.println("10. Show details of an expense");
         System.out.println("0. Close application");
         System.out.println("----------------------");
         System.out.print("Please enter your choice: ");

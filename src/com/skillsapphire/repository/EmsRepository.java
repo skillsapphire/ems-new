@@ -1,6 +1,7 @@
 package com.skillsapphire.repository;
 
 import com.skillsapphire.model.Category;
+import com.skillsapphire.model.Expense;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.List;
 public class EmsRepository {
 
     private List<Category> categories = new ArrayList<Category>();
+    private List<Expense> expenses = new ArrayList<Expense>();
+
     private static EmsRepository emsRepository;
 
     private EmsRepository(){}
@@ -25,5 +28,13 @@ public class EmsRepository {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
     }
 }
