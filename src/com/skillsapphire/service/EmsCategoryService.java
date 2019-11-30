@@ -108,13 +108,87 @@ public class EmsCategoryService {
 
     }
     public void updateExpense(){
-        System.out.print("updateExpense");
+
+        showAllExpenses();
+        System.out.print("Choose an expense to update: ");
+        Integer choice = input.nextInt();
+
+        // Flush the extra newline, as its gets added to the stream after taking any numeric value as input from scanner class
+        input.nextLine();
+
+        Expense expense = emsRepository.getExpenses().get(choice-1);
+        emsRepository.getExpenses().remove(choice-1);
+
+        // Questionaire what to update
+        System.out.println("What do you want to update, choose from below: ");
+        System.out.print("1. Amount, 2. Date, 3. Remark, 4. Category :");
+
+        choice = input.nextInt();
+
+        // Flush the extra newline, as its gets added to the stream after taking any numeric value as input from scanner class
+        input.nextLine();
+
+        if(choice == 1){
+
+            System.out.println("Current expense amount is: "+expense.getAmount());
+            System.out.print("Enter new expense amount: ");
+            Float amount = input.nextFloat();
+            expense.setAmount(amount);
+
+        }else if(choice == 2){
+
+            System.out.println("Current expense date is: "+expense.getDate());
+            System.out.print("Enter new expense date(DD/MM/YYYY): ");
+            String dateInString = input.nextLine();
+            Date date = EmsUtil.convertStringToDate(dateInString,"dd/MM/yyyy");
+            expense.setDate(date);
+
+        }else if(choice == 3){
+
+            System.out.println("Current expense remark is: "+expense.getRemark());
+            System.out.print("Enter new expense remark: ");
+            String remark = input.nextLine();
+            expense.setRemark(remark);
+
+        }else if(choice == 4){
+
+            String catName = EmsUtil.getCategoryNameWithCategoryId(expense.getCategoryId(), emsRepository.getCategories());
+            System.out.println("Current expense category is: "+catName);
+
+            System.out.println("Choose new expense category: ");
+            showAllCategories();
+            choice = input.nextInt();
+
+            Category category = emsRepository.getCategories().get(choice-1);
+            expense.setCategoryId(category.getId());
+
+        }
+        emsRepository.getExpenses().add(choice-1,expense);
+        System.out.println("Below is the list of updated expense: ");
+        showAllExpenses();
+
     }
     public void deleteExpense(){
-        System.out.print("deleteExpense");
+
+        showAllExpenses();
+        System.out.print("Choose an expense to delete: ");
+        Integer choice = input.nextInt();
+
+        emsRepository.getExpenses().remove(choice-1);
+        System.out.println("Expense was successfully deleted!");
+
+        showAllExpenses();
+
     }
     public void showAnExpense(){
-        System.out.print("showAnExpense");
+        showAllExpenses();
+        System.out.print("Choose an expense for showing details: ");
+        Integer choice = input.nextInt();
+        Expense expense = emsRepository.getExpenses().get(choice-1);
+        System.out.println("Below is the details of the chosen expense: ");
+        String categoryName = EmsUtil.getCategoryNameWithCategoryId(expense.getCategoryId(), emsRepository.getCategories());
+        String expDateInString = EmsUtil.convertDateToString(expense.getDate(),"dd/MM/yyyy");
+        System.out.println("Expense amount: "+expense.getAmount()+", Expense date: "+expDateInString+", Expense remark: "+expense.getRemark()+", Expense category: "+categoryName);
     }
     public void showAllExpenses(){
 
