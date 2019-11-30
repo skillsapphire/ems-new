@@ -5,15 +5,14 @@ import com.skillsapphire.model.Expense;
 import com.skillsapphire.repository.EmsRepository;
 import com.skillsapphire.util.EmsUtil;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class EmsCategoryService {
 
     private Scanner input = new Scanner(System.in);
     private static EmsCategoryService emsCategoryService;
     private EmsRepository emsRepository = EmsRepository.getEmsRepository();
+    private EmsReportService emsReportService = EmsReportService.getEmsReportService();
 
     private EmsCategoryService(){}
 
@@ -201,5 +200,18 @@ public class EmsCategoryService {
             String expDateInString = EmsUtil.convertDateToString(expense.getDate(),"dd/MM/yyyy");
             System.out.println((i+1)+". "+"Expense amount: "+expense.getAmount()+", Expense date: "+expDateInString+", Expense remark: "+expense.getRemark()+", Expense category: "+categoryName);
         }
+    }
+
+    public void showCategoryWiseReport(){
+        System.out.println("Category wise expense: ");
+        Map<String,Float> reportMap = emsReportService.categoryWiseExpenseReport();
+        Set<String> categorynames = reportMap.keySet();
+        Float grandTotal = 0.0F;
+        for (String catName : categorynames){
+            Float categoryWiseTotal = reportMap.get(catName);
+            grandTotal = grandTotal + categoryWiseTotal;
+            System.out.println(catName+" - "+categoryWiseTotal);
+        }
+        System.out.println("Grand total for all categories is "+grandTotal);
     }
 }
