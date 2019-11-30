@@ -117,6 +117,15 @@ public class EmsCategoryService {
         System.out.print("showAnExpense");
     }
     public void showAllExpenses(){
-        System.out.print("showAllExpenses");
+
+        System.out.println("Showing all expenses: ");
+        List<Expense> expenseList = emsRepository.getExpenses();
+        Expense expense = null;
+        for(int i=0; i<expenseList.size(); i++){
+            expense = expenseList.get(i);
+            String categoryName = EmsUtil.getCategoryNameWithCategoryId(expense.getCategoryId(), emsRepository.getCategories());
+            String expDateInString = EmsUtil.convertDateToString(expense.getDate(),"dd/MM/yyyy");
+            System.out.println((i+1)+". "+"Expense amount: "+expense.getAmount()+", Expense date: "+expDateInString+", Expense remark: "+expense.getRemark()+", Expense category: "+categoryName);
+        }
     }
 }
